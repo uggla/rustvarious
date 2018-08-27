@@ -5,7 +5,7 @@ struct Person<'a> {
     first_name: &'a str,
     last_name: &'a str,
     age: u8,
-    phone: &'a str,
+    phone: Vec<String>,
 }
 
 impl<'a> Person<'a> {
@@ -14,11 +14,11 @@ impl<'a> Person<'a> {
             first_name,
             last_name,
             age,
-            phone: "",
+            phone: vec![],
         }
     }
     pub fn add_phone(&mut self, phone: &'a str) {
-        self.phone = phone;
+        self.phone.push(phone.to_string());
     }
 }
 
@@ -34,6 +34,7 @@ fn main() {
     //contacts.push(create_person("René", "Ribaud", 43));
     let mut dude = Person::new("René", "Ribaud", 43);
     dude.add_phone("0629215133");
+    dude.add_phone("0476267003");
 
     contacts.push(dude);
 
