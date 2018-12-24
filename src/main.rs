@@ -1,11 +1,20 @@
 use std::fmt;
 
 #[derive(Debug)]
+#[allow(dead_code)]
+enum Phonetype {
+    Mobile,
+    Work,
+    Home,
+}
+
+#[derive(Debug)]
 struct Person<'a> {
     first_name: &'a str,
     last_name: &'a str,
     age: u8,
     phone: Vec<String>,
+    phonetype: Phonetype,
 }
 
 impl<'a> Person<'a> {
@@ -15,6 +24,7 @@ impl<'a> Person<'a> {
             last_name,
             age,
             phone: vec![],
+            phonetype: Phonetype::Work
         }
     }
     pub fn add_phone(&mut self, phone: &'a str) {
@@ -31,10 +41,11 @@ impl<'a> fmt::Display for Person<'a> {
 fn main() {
     let mut contacts: Vec<Person> = Vec::new();
 
-    //contacts.push(create_person("René", "Ribaud", 43));
-    let mut dude = Person::new("René", "Ribaud", 43);
-    dude.add_phone("0629215133");
-    dude.add_phone("0476267003");
+    let mut dude = Person::new("John", "Doe", 45);
+    dude.add_phone("1010101010");
+    dude.add_phone("1111111111");
+    dude.add_phone("2222222222");
+    dude.add_phone("3333333333");
 
     contacts.push(dude);
 
