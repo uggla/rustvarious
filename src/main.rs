@@ -24,7 +24,7 @@ impl<'a> Person<'a> {
             last_name,
             age,
             phone: vec![],
-            phonetype: Phonetype::Work
+            phonetype: Phonetype::Work,
         }
     }
     pub fn add_phone(&mut self, phone: &'a str) {
@@ -46,6 +46,7 @@ fn main() {
     dude.add_phone("1111111111");
     dude.add_phone("2222222222");
     dude.add_phone("3333333333");
+    dude.add_phone("0565565656");
 
     contacts.push(dude);
 
