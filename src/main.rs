@@ -41,6 +41,20 @@ impl fmt::Display for Person<'_> {
     }
 }
 
+trait Topable {
+    fn top(&self, n: usize) -> Self;
+}
+
+impl<T: std::cmp::Ord + Clone> Topable for Vec<T> {
+    fn top(&self, n: usize) -> Self {
+        let mut top = self.clone();
+        top.sort();
+        top.reverse();
+        top.truncate(n);
+        top
+    }
+}
+
 fn main() {
     let mut contacts: Vec<Person> = Vec::new();
     let mut dude = Person::new("John", "Doe", 45);
@@ -74,4 +88,10 @@ fn main() {
     println!("Cpu model:{}", cpus.model_name(0).unwrap());
     let k = KernelStats::current().unwrap();
     println!("Kernel user time: {}", k.total.user_ms());
+
+    let truc = vec![1, 2, 3, 4, 5];
+    dbg!(&truc);
+
+    let truc2 = truc.top(3);
+    dbg!(&truc2);
 }
