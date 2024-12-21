@@ -1,6 +1,8 @@
 [package]
 name = "various"
 version = "0.1.0"
+edition = "2021"
 authors = ["Uggla <uggla@free.fr>"]
 
 [dependencies]
+procfs = "0.17.0"

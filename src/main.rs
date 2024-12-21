@@ -1,13 +1,16 @@
 use std::fmt;
 
-#[derive(Debug)]
+use procfs::{Current, CurrentSI, KernelStats};
+
 #[allow(dead_code)]
+#[derive(Debug)]
 enum Phonetype {
     Mobile,
     Work,
     Home,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct Person<'a> {
     first_name: &'a str,
@@ -32,7 +35,7 @@ impl<'a> Person<'a> {
     }
 }
 
-impl<'a> fmt::Display for Person<'a> {
+impl fmt::Display for Person<'_> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Person name: {}, {}", self.first_name, self.last_name)
     }
@@ -40,16 +43,35 @@ impl<'a> fmt::Display for Person<'a> {
 
 fn main() {
     let mut contacts: Vec<Person> = Vec::new();
-
     let mut dude = Person::new("John", "Doe", 45);
+
+    dude.add_phone("dsds");
     dude.add_phone("1010101010");
     dude.add_phone("1111111111");
     dude.add_phone("2222222222");
     dude.add_phone("3333333333");
     dude.add_phone("0565565656");
-
+    dude.add_phone("0565565657");
+    let mut dude2 = Person::new("Marie", "Doe", 45);
+    dude2.add_phone("1010101010");
     contacts.push(dude);
+
+    contacts.push(dude2);
+
+    // for i in &mut contacts {
+    //     i.first_name = "RRR";
+    // }
+    //
+    // for i in &mut dude.phone {
+    //     *i = "ddd".to_string();
+    // }
 
     println!("{:#?}", contacts);
     println!("{}", &contacts[0]);
+
+    let cpus = procfs::CpuInfo::current().unwrap();
+    println!("Cpu cores: {}", cpus.num_cores());
+    println!("Cpu model:{}", cpus.model_name(0).unwrap());
+    let k = KernelStats::current().unwrap();
+    println!("Kernel user time: {}", k.total.user_ms());
 }
